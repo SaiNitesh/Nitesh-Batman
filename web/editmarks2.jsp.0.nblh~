@@ -1,0 +1,161 @@
+<%-- 
+    Document   : editmarks2
+    Created on : Jun 20, 2012, 8:36:11 AM
+    Author     : Administrator
+--%>
+
+<%@ page language="java" contentType="text/html"%>
+<%@ page import="java.io.*"%>
+<%@ page import="java.sql.*"%>
+<%@ include  file="head.jsp" %>
+<html>
+<head><title>EDIT MARKS FORM</title>
+</head>
+<body>
+
+<table border=1 align=center width=1182 height=400 bgcolor="#303030">
+<tr><td>
+      <%
+      int result=0;
+      try
+        {
+      int x=0;
+       
+        PreparedStatement pstmt;
+        
+        Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+        Connection con = DriverManager.getConnection("jdbc:Odbc:Database", "", "");
+        
+        Statement stmt = con.createStatement();
+        
+        HttpSession hs=request.getSession(true);
+        
+        String year1=(String)hs.getAttribute("year1");
+                      
+
+//System.out.println("the year="+year);
+
+        
+        
+        
+        
+        
+         
+                                                      
+       String  id = request.getParameter("id");
+       String stname = request.getParameter("stname");
+       String regulation = request.getParameter("regulation");        
+       String sname = request.getParameter("sname");
+       String m1d = request.getParameter("m1d");
+       String m1o = request.getParameter("m1o");
+       String perc1 = request.getParameter("perc1");
+       String m2d = request.getParameter("m2d");
+       String m2o = request.getParameter("m2o");
+       String perc2 = request.getParameter("perc2");
+       String des = request.getParameter("des");
+       String onl = request.getParameter("onl");
+       String total = request.getParameter("total");
+       String perc = request.getParameter("perc");
+        
+        
+        
+        System.out.println("perc=+perc");
+        
+       
+       
+
+        
+               
+               
+                String qy = "delete from "+year1+" where id='" + id + "'";
+        stmt = con.createStatement();
+        stmt.executeUpdate(qy);
+        
+        
+        System.out.println("perc=+perc");
+        
+        
+        for(int i=0;i<x;i++)
+{
+
+        String query = "INSERT INTO "+year1+"(id,stname,regulation,sname,m1d,m1o,perc1,m2d,m2o,perc2,des,onl,total,perc)values(?,?,?,?,?,?,?,?,?,?,?)";
+        pstmt = con.prepareStatement(query);
+        
+        
+        pstmt.setString(1, id);
+        pstmt.setString(2, stname);
+        pstmt.setString(3, regulation);
+        pstmt.setString(4, sname);
+        pstmt.setString(5, m1d);
+        pstmt.setString(6, m1o);
+        pstmt.setString(7, perc1);
+        pstmt.setString(8, m2d);
+        pstmt.setString(9, m2o);
+        pstmt.setString(10, perc2);
+        pstmt.setString(11, des);
+        pstmt.setString(12, onl);
+        pstmt.setString(13, total);
+        pstmt.setString(14, perc);
+        
+        System.out.println("perc=+perc");
+        
+        float x1=Integer.parseInt(m1d)/2;
+//System.out.println("the x1="+x1);
+float x2=Integer.parseInt(m2d)/2;
+//System.out.println("the x2="+x2);
+float z=0;
+if(x1>x2)
+{
+     z=x1;
+}
+else
+    z=x2;
+//System.out.println("the z="+z);
+pstmt.setFloat(11,z);
+//System.out.println("hello");
+//System.out.println("The m1o[i]="+m1o[i]);
+float y1=Integer.parseInt(m1o)/2;
+//System.out.println("the y1="+y1);
+float y2=Integer.parseInt(m2o)/2;
+//System.out.println("the y2="+y2);
+
+float z1=0;
+if(y1>y2)
+{
+     z1=y1;
+}
+else
+    z1=y2; 
+//System.out.println("the z1="+z1);
+pstmt.setFloat(12,z1);
+pstmt.setFloat(13,(z+z1)/2);
+//System.out.println("hello2");
+float k1=Integer.parseInt(perc1);
+//System.out.println("the k1="+k1);
+float k2=Integer.parseInt(perc2);
+//System.out.println("the k2="+k2);
+float m=(k1+k2)/2;
+//System.out.println("the m="+m);
+pstmt.setFloat(14,m);
+
+        
+        pstmt.executeUpdate();
+     
+        System.out.println("perc=+perc");
+        }
+        }
+      catch(Exception y)
+        {
+    y.printStackTrace();
+}
+
+                    %>
+
+                    <h2 align=center><font color="white" face="verdana">  updated successfully</font> </h2>
+
+
+</td></tr>
+</table>
+
+</body>
+</html>
